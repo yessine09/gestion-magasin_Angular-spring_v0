@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head th.replace="header :: html_head"></head>
+<body>
+	<div class="container">
+		<div th:replace="header :: header">Static header</div>
+		<div>
+		<h2>manage Facture</h2>
+		<a th:href="@{/facture/new}">Create new facture</a>
+		&nbsp;|&nbsp;
+		<a th:href="@{/facture/export}">Export to pdf</a>
+		</div>
+	</div>
+</body>
+</html>
