@@ -1,36 +1,36 @@
-package tn.esprit.spring.controller;
+	package tn.esprit.spring.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import tn.esprit.spring.entity.Client;
-import tn.esprit.spring.service.IClient;
+import tn.esprit.spring.entities.Client;
+import tn.esprit.spring.services.IClient;
 
 @RestController
 public class ClientRestController {
 
 	@Autowired
 	IClient clientService;
-	// // http://localhost:8088/SpringMVC/servlet/retrieve-all-clients
+    @PreAuthorize("hasAnyRole('Client')") 
+
+	// // http://localhost:8089/SpringMVC/client/retrieve-all-clients
+	@GetMapping("/retrive-all-clients")
+	//responseBody objet convertir l json (Serialisation)
+	@ResponseBody
+	public List<Client> getClients(){
+		List<Client> listClients = clientService.retrieveAllClients();
+		return listClients;
+	}
 	
-		@GetMapping("/retrieve-all-clients")
-		//responseBody objet convertir l json (Serialisation)
-		
-		@ResponseBody
-		public List<Client> getClients(){
-			List<Client> listClients = clientService.retrieveAllClients();
-			return listClients;
-		}
 	//recupérer selon l'id
 	// http://localhost:8089/SpringMVC/client/retrieve-client/8
 	@GetMapping("/retrieve-client/{client-id}")
@@ -56,18 +56,14 @@ public class ClientRestController {
 	// http://localhost:8089/SpringMVC/client/remove-client/{client-id}
 	@DeleteMapping("/remove-client/{client-id}")
 	@ResponseBody
-	public void removeClient(@PathVariable("client-id") Long clientId) {	
+	public void removeClient(@PathVariable("client-id") Long clientId) {
 	clientService.deleteClient(clientId);
-	System.out.println("Deleted successfuly");
 	}
-	
-	// http://localhost:8089/SpringMVC/client/modify-client
-	@PutMapping("/modify-client")
+	@GetMapping("/fidelite/{client-id}")
 	@ResponseBody
-	public Client modifyClient(@RequestBody Client client) {
-	return clientService.updateClient(client);
-	}
+	public boolean fidelite(@PathVariable("client-id")Long clientId) {
+		return clientService.fidilite(clientId);
+		}
 	
-	
-	
+
 }
