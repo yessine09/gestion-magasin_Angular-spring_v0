@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import tn.esprit.spring.entity.Client;
@@ -14,7 +15,7 @@ import tn.esprit.spring.service.ClientService;
 import tn.esprit.spring.service.IClient;
 import tn.esprit.spring.service.IProduit;
 
-
+@EnableAspectJAutoProxy
 @EnableSwagger2
 @SpringBootApplication
 public class SpringProjectsApplication implements CommandLineRunner  {

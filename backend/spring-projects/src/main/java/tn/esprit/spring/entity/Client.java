@@ -6,6 +6,7 @@ package tn.esprit.spring.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -60,7 +61,7 @@ public class Client  implements Serializable {
 	private String email;
 	private String password;
 	@Enumerated (EnumType.STRING)
-	private CategorieClient categorie ;
+	private CategorieClient categorieClient ;
 	@Enumerated (EnumType.STRING)
 	//private String profession = Profession.DOCTEUR;
 	private Profession profession;
@@ -88,8 +89,10 @@ public class Client  implements Serializable {
 	
 	
 @OneToMany(cascade = CascadeType.ALL, mappedBy="client")
+@EqualsAndHashCode.Exclude
+@ToString.Exclude
 @JsonIgnore
-private Set <Facture> facture;
+private List <Facture> facture;
 
 
 

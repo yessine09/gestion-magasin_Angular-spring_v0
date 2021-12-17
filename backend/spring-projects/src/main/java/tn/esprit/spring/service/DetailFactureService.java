@@ -1,10 +1,12 @@
 package tn.esprit.spring.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entity.DetailFacture;
 import tn.esprit.spring.entity.Facture;
 import tn.esprit.spring.entity.Produit;
@@ -12,6 +14,7 @@ import tn.esprit.spring.repository.DetailFactureRepository;
 import tn.esprit.spring.repository.FactureRepository;
 import tn.esprit.spring.repository.ProduitRepository;
 
+@Slf4j
 @Service
 public class DetailFactureService implements IDetailFacture {
 
@@ -77,5 +80,36 @@ public class DetailFactureService implements IDetailFacture {
 		return detailFactureRepository.save(df);
 	}
 
+	@Override
+	public List<DetailFacture> retrieveIdFactures(Long idFacture) {
+		return detailFactureRepository.findByFacture(factureRepository.findById(idFacture).orElse(null));
+	}
+
+	@Override
+	public List<DetailFacture> search(String keyword) {
+		if (keyword != null) {
+            return detailFactureRepository.search(keyword);
+        }
+        return detailFactureRepository.findAll();
+	}
+
+	@Override
+	public List<DetailFacture> retrieveDetailFactureByIdFacture(Long idF) {
+		return detailFactureRepository.findByFacture(factureRepository.findById(idF).orElse(null));
+	}
+
+//	@Override
+//	public List<?> bestProduct(Date startDate, Date endDate) {
+//		return detailFactureRepository.bestProduct(startDate, endDate);
+//	}
+
+	@Override
+	public List<?> getPrixDate() {
+		return detailFactureRepository.getPrixDate();
+	}
+	
+	
+	
+	
 
 }

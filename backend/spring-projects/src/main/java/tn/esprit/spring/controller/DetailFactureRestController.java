@@ -1,14 +1,19 @@
 package tn.esprit.spring.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +25,9 @@ import tn.esprit.spring.service.IFacture;
 
 
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@RequestMapping("/detailFacture")
 public class DetailFactureRestController {
 	
 	
@@ -80,5 +87,33 @@ public class DetailFactureRestController {
 		public DetailFacture modifyDetailFacture(@RequestBody DetailFacture detailFacture) {
 		return detailFactureService.updateDetailFacture(detailFacture);
 		}
+		
+		// http://localhost:8088/SpringMVC/servlet/retrieve-detailFacture/id
+				@GetMapping("/get-detailFacture/{facture-id}")
+				@ResponseBody
+				public List<DetailFacture> getDetailFactures(@PathVariable("facture-id")Long factureId) {
+					return detailFactureService.retrieveIdFactures(factureId);
+					}
+				
+				
+				//search
+				@RequestMapping("/search-detail-facture")
+				public List<DetailFacture> search(@Param("keyword") String keyword) {
+					List<DetailFacture> listDFactures = detailFactureService.search(keyword);
+					return listDFactures;
+				}
+//bestProduct
+//				@GetMapping("/best-product-by-category-client/{start-date}/{end-date}")
+//				public List<?> bestProductByCategoryClient(
+//						@PathVariable("start-date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+//						@PathVariable("end-date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
+//
+//					return detailFactureService.bestProduct(startDate, endDate);
+//				}
+//dateprix
+				@GetMapping("/get-prix-date")
+				public List<?> getPrixDate() {
+					return detailFactureService.getPrixDate();
+				}
 		
 }
